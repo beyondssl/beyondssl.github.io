@@ -1,0 +1,878 @@
+/* -------------------------------------------------------------------------- */
+/*	Colors
+/* -------------------------------------------------------------------------- */
+
+:root {
+    --primary: #0075bf;
+    --secondary: #47536b;
+    --green: #8cc63f;
+    --light-grey: #f7f7f7;
+    --middle-grey: #eeeeee;
+    --black: #000000;
+    --white: #FFFFFF;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*	CSS Reset
+/* -------------------------------------------------------------------------- */
+
+html,
+body {
+    border: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+address,
+big,
+cite,
+code,
+em,
+font,
+img,
+small,
+strike,
+sub,
+sup,
+li,
+ol,
+ul,
+fieldset,
+form,
+label,
+legend,
+button,
+table,
+caption,
+tr,
+th,
+td {
+    border: none;
+    font-size: inherit;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+    text-align: inherit;
+}
+
+blockquote::before,
+blockquote::after {
+    content: "";
+}
+
+:focus {
+    outline: none;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*	Document Setup & Fonts
+/* -------------------------------------------------------------------------- */
+
+html {
+    font-size: 62.5%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+@font-face {
+    font-family: 'Titillium Web';
+    font-style: normal;
+    font-weight: 300;
+    src: local(''),
+        url('../../assets/fonts/TitilliumWeb-Light.ttf') format('truetype'),
+        url('../../assets/fonts/TitilliumWeb-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Titillium Web';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+    url('../../assets/fonts/TitilliumWeb-Regular.ttf') format('truetype'),
+    url('../../assets/fonts/TitilliumWeb-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Titillium Web';
+    font-style: normal;
+    font-weight: 600;
+    src: local(''),
+    url('../../assets/fonts/TitilliumWeb-Bold.ttf') format('truetype'),
+    url('../../assets/fonts/TitilliumWeb-Bold.ttf') format('truetype');
+}
+
+body,
+html {
+    font-family: 'Titillium Web', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    color: var(--secondary);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-feature-settings: "lnum";
+    font-variant-numeric: lining-nums;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 4.5rem;
+    line-height: 1.3;
+    color: var(--primary);
+}
+
+h2 {
+    font-size: 4rem;
+    color: var(--primary);
+}
+
+h3 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+h3.widget-title+* {
+    margin-top: 20px;
+}
+
+h4 {
+    font-size: 2.6rem;
+    font-weight: bold;
+}
+
+h5 {
+    font-size: 2.1rem;
+}
+
+h6 {
+    font-size: 1.6rem;
+    letter-spacing: 0.03125em;
+    text-transform: uppercase;
+}
+
+h1+p,
+h2+p,
+h3+p,
+h4+p,
+h5+p,
+h6+p {
+    margin-top: 1em;
+}
+
+h1+h2,
+h2+h3,
+h3+h4 {
+    margin-top: 30px;
+}
+
+p {
+    line-height: 1.6;
+    margin: 0 0 1em 0;
+    font-size: 1.6rem;
+}
+
+P:last-child {
+    margin-bottom: 0;
+}
+
+p a:not([class]) {
+    color: var(--primary);
+}
+
+p a:not([class]):hover,
+p a:not([class]):focus {
+    color: var(--green);
+}
+
+ul {
+    line-height: 1.6;
+    font-size: 1.6rem;
+    padding-left: 20px;
+    margin: 0 0 1em 0;
+}
+
+ol {
+    counter-reset: item;
+    line-height: 1.6;
+    font-size: 1.6rem;
+    margin: 0 0 1em 0;
+}
+
+ol li {
+    display: block;
+}
+
+ol li::before {
+    content: counters(item, ".") ". ";
+    counter-increment: item;
+}
+
+ul ol,
+ul ul,
+ol ul,
+ol ol {
+    margin-bottom: 0;
+    padding-left: 20px;
+}
+
+em,
+i,
+q,
+dfn {
+    font-style: italic;
+}
+
+em em,
+em i,
+i em,
+i i,
+cite em,
+cite i {
+    font-weight: bolder;
+}
+
+b,
+strong {
+    font-weight: 700;
+}
+
+input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    background: var(--middle-grey);
+    border-radius: 10px;
+    border: none;
+    font-size: 1.6rem;
+    font-family: 'Titillium Web', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, sans-serif;
+    margin-bottom: 20px;
+    color: var(--secondary);
+}
+
+select {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0px 10px;
+    background: var(--middle-grey);
+    border-radius: 10px;
+    border: 10px solid var(--middle-grey);
+    font-size: 1.6rem;
+    font-family: 'Titillium Web', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, sans-serif;
+    margin-bottom: 20px;
+    color: var(--secondary);
+}
+
+.checkbox-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    display: inline-block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: var(--middle-grey);
+    border-radius: 10px;
+    border: none;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+    color: var(--secondary);
+}
+
+input[type="checkbox"]::after,
+input[type="radio"]::after {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: '\f00c';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.2rem;
+    color: var(--secondary);
+    opacity: 0;
+}
+
+input[type="checkbox"]:checked::after,
+input[type="radio"]:checked::after {
+    opacity: 1;
+}
+
+.checkbox-container input[type="checkbox"],
+.checkbox-container input[type="radio"] {
+    flex: 1 1 44px;
+    max-width: 44px;
+}
+
+label {
+    font-size: 1.6rem;
+    display: block;
+    padding: 5px;
+}
+
+.checkbox-container label {
+    font-weight: normal !important;
+    padding: 0;
+}
+
+hr {
+    border-style: solid;
+    border-color: var(--middle-grey);
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*	General styling
+/* -------------------------------------------------------------------------- */
+
+.full-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 100%;
+}
+
+.sidebar {
+    flex: 0 1 320px;
+    background: var(--light-grey);
+    padding: 30px 50px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.logo,
+.logo img {
+    width: 100%;
+    display: block;
+    height: auto;
+}
+
+.sidebar-menu {
+    margin-top: 100px;
+}
+
+.sidebar-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    display: block;
+    margin-bottom: 7px;
+}
+
+.sidebar-menu li:last-child {
+    margin-bottom: 0;
+    margin-top: 50px;
+}
+
+.sidebar-menu li a {
+    text-decoration: none;
+    color: var(--secondary);
+    font-weight: normal;
+    position: relative;
+    padding-left: 35px;
+    box-sizing: border-box;
+}
+
+.sidebar-menu li a.active {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.sidebar-menu li i {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sidebar-menu li a:hover,
+.sidebar-menu li a:focus {
+    outline: none;
+    color: var(--primary);
+}
+
+.button,
+.sidebar .button {
+    display: inline-block;
+    background: var(--green);
+    padding: 10px 25px;
+    color: var(--white);
+    border-radius: 100px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-family: 'Titillium Web', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, sans-serif;
+    cursor: pointer;
+}
+
+.button i,
+.sidebar .button i {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-right: 5px;
+}
+
+.button:hover,
+.button:focus,
+.sidebar .button:hover,
+.sidebar .button:focus {
+    color: var(--white);
+    background: var(--primary);
+}
+
+.button.secondary,
+.sidebar .button.secondary {
+    background: var(--secondary);
+}
+
+.button.secondary:hover,
+.button.secondary:focus,
+.sidebar .button.secondary:hover,
+.sidebar .button.secondary:focus {
+    color: var(--white);
+    background: var(--primary);
+}
+
+.sidebar-copyright {
+    text-align: center;
+    font-size: 1.2rem;
+    position: absolute;
+    left: 0;
+    bottom: 30px;
+    width: 100%;
+}
+
+.main-content {
+    flex: 0 1 calc(100% - 320px);
+    padding: 50px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.main-content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.main-content-header-buttons .button + .button {
+    margin-left: 10px;
+}
+
+.main-content-header + .main-content-base {
+    margin-top: 100px;
+}
+
+.main-content-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.card {
+    flex: 0 1 calc(25% - 36px);
+    margin-bottom: 50px;
+    border-radius: 20px;
+    border: 4px solid var(--white);
+    -webkit-box-shadow: 0px 0px 25px 0px rgb(0 0 0 / 30%);
+    -moz-box-shadow: 0px 0px 25px 0px rgba(0,0,0,.3);
+    box-shadow: 0px 0px 25px 0px rgb(0 0 0 / 30%);
+    box-sizing: border-box;
+    background: var(--middle-grey);
+    position: relative;
+    overflow: hidden;
+}
+
+.card a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.card-icon {
+    width: 100%;
+    height: 150px;
+    background: var(--primary);
+    color: var(--white);
+    position: relative;
+    font-size: 6rem;
+    transition: all .1s;
+}
+
+.card-icon i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.card-info {
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card-title {
+    display: block;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 2.4rem;
+    margin-bottom: 5px;   
+}
+
+.card-subtitle {
+    display: block;
+    color: var(--secondary);
+    font-size: 1.6rem;
+}
+
+.card a:hover,
+.card a:focus {
+    outline: none;
+}
+
+.card a:hover .card-icon,
+.card a:focus .card-icon {
+    background: var(--green);
+}
+
+.full-wrap.login {
+    background: url(../img/background.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    padding-top: 30px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.login-logo {
+    display: block;
+    width: 170px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.login-wrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 650px;
+}
+
+.login-wrap-inner {
+    background: var(--white);
+    border-radius: 20px;
+    -webkit-box-shadow: 0px 0px 25px 0px rgb(0 0 0 / 30%);
+    -moz-box-shadow: 0px 0px 25px 0px rgba(0,0,0,.3);
+    box-shadow: 0px 0px 25px 0px rgb(0 0 0 / 30%);
+    box-sizing: border-box;
+    padding: 50px;
+}
+
+.login-wrap-inner h1 {
+    display: block;
+    text-align: center;
+    line-height: 1;
+    margin-bottom: 50px;
+}
+
+.login-form {
+    width: 100%;
+    display: block;
+}
+
+.login-wrap-bottom {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0 50px;
+    box-sizing: border-box;
+}
+
+.login-software-version img {
+    width: 150px;
+    height: auto;
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+
+#svversion {
+    font-weight: bold;
+    font-size: 1.6rem;
+    opacity: .5;
+}
+
+.login-new {
+    padding: 15px 20px 20px 20px;
+    box-sizing: border-box;
+    background: var(--primary);
+    color: var(--white);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    -webkit-box-shadow: 0px 0px 25px 0px rgb(0 0 0 / 30%);
+    -moz-box-shadow: 0px 0px 25px 0px rgba(0,0,0,.3);
+    box-shadow: 0px 0px 25px 0px rgb(0 0 0 / 30%);
+    font-size: 1.6rem;
+}
+
+.login-new a {
+    color: var(--white);
+    text-decoration: underline;
+}
+
+.login-copyright {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    font-size: 1.4rem
+}
+
+.config-prompt {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.config-prompt-col {
+    flex: 0 1 300px;
+    margin-right: 20px;
+}
+
+.config-prompt-col input {
+    margin-bottom: 0;
+}
+
+.config-prompt p {
+    flex: 0 1 100%;
+    margin-top: 20px;
+    display: block;
+}
+
+.inlinecode {
+    padding: 0px 7px;
+    background: var(--middle-grey);
+    border-radius: 3px;
+    font-family: monospace, monospace;
+    font-weight: normal;
+    font-size: 0.875em;
+}
+
+.config-content {
+    display: none;
+}
+
+.tab-container,
+.tab-button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 1.6rem;
+}
+
+.tabs {
+    flex: 0 1 100%;
+    padding-left: 25px;
+    padding-right: 25px;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.tab-buttons {
+    flex: 0 1 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-bottom: 30px;
+}
+
+.tab {
+    margin-right: 10px;
+    padding: 15px 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    -webkit-box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 10%);
+    -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,.1);
+    box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 10%);
+    font-weight: bold;
+    cursor: pointer;
+    background: var(--white);
+}
+
+.tab-button {
+    margin-right: 10px;
+    padding: 2px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    background: var(--light-grey);
+}
+
+.tab:hover,
+.tab:focus,
+.tab-button:hover,
+.tab-button:focus {
+    outline: none;
+    background: var(--middle-grey);
+}
+
+.tab.active {
+    color: var(--white);
+    background: var(--primary);
+}
+
+.tab-button.active {
+    color: var(--white);
+    background: var(--secondary);
+}
+
+.tab:last-child,
+.tab-button:last-child {
+    margin-right: 0;
+}
+
+.tabs-content,
+.tab-buttons-content {
+    flex: 0 1 100%;
+}
+
+.tab-content {
+    display: none;
+    background: var(--white);
+    padding: 40px 45px;
+    border-radius: 20px;
+    -webkit-box-shadow: 0px 0px 25px 0px rgb(0 0 0 / 20%);
+    -moz-box-shadow: 0px 0px 25px 0px rgba(0,0,0,.2);
+    box-shadow: 0px 0px 25px 0px rgb(0 0 0 / 20%);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-button-content {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.tab-button-content::after {
+    content: '';
+    flex: 0 1 32%;
+}
+
+.tab-button-content.active {
+    display: flex;
+}
+
+.tab-content-input {
+    flex: 0 1 32%;
+    margin-bottom: 20px;
+}
+
+.tab-content-input.w20 {
+    flex: 0 1 20%;
+}
+
+.tab-content-input.w50 {
+    flex: 0 1 48%;
+}
+
+.tab-content-input.w80 {
+    flex: 0 1 78%;
+}
+
+.tab-content-input.w100 {
+    flex: 0 1 100%;
+}
+
+.tab-content-input label {
+    font-weight: bold;
+}
+
+.tab-content-input input {
+    margin-bottom: 0;
+}
+
+.input-description {
+    display: block;
+    font-size: 1.2rem;
+    padding: 2px;
+    box-sizing: border-box;
+}
+
+.input-description a {
+    color: var(--primary);
+}
+
+.tab-content-divider {
+    flex: 0 1 100%;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SparkView Configuration</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="assets/img/favicon/safari-pinned-tab.svg" color="#0075bf">
+    <link rel="shortcut icon" href="assets/img/favicon/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="SparkView">
+    <meta name="application-name" content="SparkView">
+    <meta name="msapplication-TileColor" content="#0075bf">
+    <meta name="msapplication-TileImage" content="assets/img/favicon/mstile-144x144.png">
+    <meta name="msapplication-config" content="assets/img/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css">
+</head>
+<body>
+    <div class="full-wrap">
+        <div class="sidebar">
+            <a href="/" class="logo"><img src="assets/img/beyondssl.svg" alt="SparkView Control Panel"></a>
+            <div class="sidebar-menu">
+                <ul>
+                    <li><a href="/"><i class="fa-solid fa-gauge-high"></i> Dashboard</a></li>
+                    <li><a href="" target="_blank"><i class="fa-solid fa-book"></i> Administrator Manual</a></li>
+                    <li><a href="" target="_blank"><i class="fa-solid fa-link"></i> Integration Guides</a></li>
+                    <li><a href="" target="_blank"><i class="fa-solid fa-newspaper"></i> News</a></li>
+                    <li><a href="" target="_blank"><i class="fa-solid fa-headset"></i> Support</a></li>
+                    <li><a href="" target="_blank"><i class="fa-solid fa-clock-rotate-left"></i> Version History</a></li>
+                    <li><a href="#" class="button" target="_blank"><i class="fa-solid fa-cart-shopping"></i> Buy licenses</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-copyright"><span>© <span id="cryear"></span>, beyond SSL GmbH</span></div>
+        </div>
+        <div class="main-content">
+            <div class="main-content-header">
+                <h1>SparkView Configuration</h1>
+                <div class="main-content-header-buttons">
+                    <a href="/report.html" class="button secondary"><i class="fa-solid fa-file-waveform"></i> Report</a>
+                </div>
+            </div>
+            <div class="main-content-base">
+                <div class="config-prompt">
+                    <div class="config-prompt-col">
+                        <label for="gateway">Gateway</label>
+                        <input type="text" id="gateway" />
+                    </div>
+                    <div class="config-prompt-col">
+                        <label for="gateway">Password</label>
+                        <input type="password" id="gwPwd" autocomplete="off" />
+                    </div>
+                    <div class="config-prompt-col">
+                        <!-- <a href="#" class="button" onclick="sparkConfig.getAll();"><i class="fa-solid fa-gears"></i> Start configuration</a> -->
+                        <a href="#" class="button" onclick="getConfig();"><i class="fa-solid fa-gears"></i> Start configuration</a>
+                    </div>
+                    <p>This page can only be accessed from a local device. Set <span class="inlinecode">password</span> and <span class="inlinecode">remoteManage=true</span> in gateway.conf to enable remote access.</p>
+                </div>
+                <div class="config-content">
+                    <div class="tab-container">
+                        <div class="tabs">
+                            <div class="tab active">Gateway</div>
+                            <div class="tab">Servers</div>
+                            <div class="tab">Users</div>
+                            <div class="tab">Symlink</div>
+                            <div class="tab">Session</div>
+                            <div class="tab">Server groups</div>
+                            <div class="tab">User groups</div>
+                        </div>
+                        <div class="tabs-content">
+                            <div class="tab-content active">
+                                <div class="tab-button-container">
+                                    <div class="tab-buttons">
+                                        <div class="tab-button active">General</div>
+                                        <div class="tab-button">Data storage</div>
+                                        <div class="tab-button">Connection</div>
+                                        <div class="tab-button">Logging</div>
+                                        <div class="tab-button">Printer</div>
+                                        <div class="tab-button">Security</div>
+                                        <div class="tab-button">Notifying</div>
+                                        <div class="tab-button">License</div>
+                                    </div>
+                                    <div class="tab-buttons-content">
+                                        <div class="tab-button-content active">
+                                            <div class="tab-content-input">
+                                                <label for="gatewaymode">Gateway mode</label>
+                                                <select name="gatewaymode" id="gatewaymode">
+                                                    <option value="master">Master</option>
+                                                    <option value="slave">Slave</option>
+                                                </select>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="masterconfig">Master config file</label>
+                                                <input type="text" name="masterconfig" id="masterconfig">
+                                                <span class="input-description">Path to the config file if gateway mode is slave</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="gatewayid">Gateway ID</label>
+                                                <input type="text" name="gatewayid" id="gatewayid">
+                                                <span class="input-description">Used for email notification etc.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="bindaddr">Binding address</label>
+                                                <input type="text" name="bindaddr" id="bindaddr">
+                                                <span class="input-description">If you have multiple IP addresses and want to bind on one of them</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="port">Port</label>
+                                                <input type="text" name="port" id="port" value="80">
+                                                <span class="input-description">Listening port, default is 80. You can listen on 2 ports at the same time, e.g. <span class="inlinecode">port=80,443</span></span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>SSL</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="ssl" id="ssl"><label for="ssl">Use HTTPS and WSS</label>
+                                                </div>
+                                                <span class="input-description">If gateway is listening on 2 ports, the parameter can be configured as: <span class="inlinecode">ssl=false,true</span> in gateway.conf</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="backlog">Backlog</label>
+                                                <input type="text" name="backlog" id="backlog" value="50">
+                                                <span class="input-description">How many connections can be queued, default is 50</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="directoryindex">Directory index</label>
+                                                <input type="text" name="directoryindex" id="directoryindex" value="rdp.html;index.html">
+                                                <span class="input-description">Default page for html directory, default is "rdp.html;index.html"</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="plugin">Plugin</label>
+                                                <input type="text" name="plugin" id="plugin">
+                                                <span class="input-description">Class name for your plugin</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="pluginFile">Plugin file</label>
+                                                <input type="text" name="pluginFile" id="pluginFile">
+                                                <span class="input-description">The full path of your plug-in jar file</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Remote manage</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="remoteManage" id="remoteManage"><label for="remoteManage">Allow remote management</label>
+                                                </div>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="password">Password</label>
+                                                <input type="text" name="password" id="password">
+                                                <span class="input-description">Password for reporting and management API</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="mime">MIME types</label>
+                                                <input type="text" name="mime" id="mime">
+                                                <span class="input-description">Add extra mime types for web server: <span class="inlinecode">rdp:application/rdp;conf:text/plain</span></span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="keepDays">Temporary files lifetime (days)</label>
+                                                <input type="text" name="keepDays" id="keepDays" value="1">
+                                                <span class="input-description">How many days the temporary files generated by system be kept, default is 1 day</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="webAddress">HTTP server web address</label>
+                                                <input type="text" name="webAddress" id="webAddress">
+                                                <span class="input-description">Used for OpenID login (redirection back). It's also used on client side for getting real gateway address.</span>
+                                            </div>
+
+                                            <div class="tab-content-divider">
+                                                <h3>Miscellaneous</h3>
+                                                <hr>
+                                            </div>
+
+                                            <div class="tab-content-input">
+                                                <label>Unlistet computer access</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="accessNotInList" id="accessNotInList"><label for="accessNotInList">Allow unlistet computer access</label>
+                                                </div>
+                                                <span class="input-description">Determine if logged in user can access computers which is not in their list (servers.json) or webfeed, default is false</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="cipherSuites">Cipher suites</label>
+                                                <input type="text" name="cipherSuites" id="cipherSuites">
+                                                <span class="input-description">The cipher suites can be used by SSL encryption. You may want to use some good cipher suites only</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>DNS lookups</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="enableLookups" id="enableLookups"><label for="enableLookups">Enable DNS lookups</label>
+                                                </div>
+                                                <span class="input-description">Set to true if you want calls to perform DNS lookups in order to return the actual host name of the remote client. Set to false to skip the DNS lookup and return the IP address in String form instead (thereby improving performance). By default, DNS lookups are disabled.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="maxCacheTime">Max cache time (minutes)</label>
+                                                <input type="text" name="maxCacheTime" id="maxCacheTime">
+                                                <span class="input-description">How long the session can be cached on gateway, default is 0 (RDP session cache on gateway is disabled by default)</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="thumbnail.interval">Thumbnail interval (milliseconds)</label>
+                                                <input type="text" name="thumbnail.interval" id="thumbnail.interval" value="0">
+                                                <span class="input-description">Interval for obtaining thumbnails of RDP session, default is 0 (no thumbnail). Client will not send thumbnail to server if screen is not changed.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="thumbnail.width">Thumbnail width (pixels)</label>
+                                                <input type="text" name="thumbnail.width" id="thumbnail.width" value="0">
+                                                <span class="input-description">Thumbnail width must be smaller than 640px, default is 0 (no thumbnail)</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="savedSessionTimeout">Saved session timeout (milliseconds)</label>
+                                                <input type="text" name="savedSessionTimeout" id="savedSessionTimeout" value="0">
+                                                <span class="input-description">This is the maximum value for saved sessions, default is 0, means user cannot save session on gateway.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="disabledKeys">Disabled keys</label>
+                                                <input type="text" name="disabledKeys" id="disabledKeys">
+                                                <span class="input-description">Keys (scancode), which will not be sent to server, e.g. 219,220 (left and right Windows key); 29+56+211,56+1 will disable Ctrl+Alt+Del and Alt+Esc</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>HTTPS redirect</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="redirectToHttps" id="redirectToHttps"><label for="redirectToHttps">Enable HTTPS redirect</label>
+                                                </div>
+                                                <span class="input-description">Redirect HTTP traffic to HTTPS. Make sure gateway listen on both HTTP and HTTPS.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Create new connection on hostless symlink</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="connectif" id="connectif"><label for="connectif">Create new connection</label>
+                                                </div>
+                                                <span class="input-description">Create a new connection if you are joining a symlink which doesn't connect to any hosts.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Use random IP address</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="randomIp" id="randomIp"><label for="randomIp">Use random IP address</label>
+                                                </div>
+                                                <span class="input-description">Use a random IP address if your host name has multiple IP addresses, default is false.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="headers">Additional headers</label>
+                                                <input type="text" name="headers" id="headers">
+                                                <span class="input-description">Extra headers for HTTP response, For example: <span class="inlinecode">headers=Strict-TransportSecurity: max-age=31536000\r\nContent-Security-Policy: script-src 'self'\r\nXXSS-Protection: 1; mode=block\r\nX-Frame-Options: SAMEORIGIN\r\nX-ContentType-Options: nosniff\r\n</span></span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="timeoutWoL">Wake on LAN timeout (milliseconds)</label>
+                                                <input type="text" name="timeoutWoL" id="timeoutWoL">
+                                                <span class="input-description">Timeout of Wake on LAN. This will enable WoL if the value is great that 0.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Only accept symlink connections</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="symlinkOnly" id="symlinkOnly"><label for="symlinkOnly">Only accept symlink connections</label>
+                                                </div>
+                                                <span class="input-description">Gateway will only accept symlink connections if symlinkOnly is true.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="pingClient">Ping client interval (milliseconds)</label>
+                                                <input type="text" name="pingClient" id="pingClient">
+                                                <span class="input-description">Ping client interval. CND or proxy may not close the websocket correctly and leave session alive forever on the gateway. You can enable this to fix this kind of issue. This is enabled by default since 5.6.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="maxRequestBytes">Max request size</label>
+                                                <input type="text" name="maxRequestBytes" id="maxRequestBytes" value="8KB">
+                                                <span class="input-description">Determines the upper limit for the total size of the request line and the headers. Its default setting is 8KB.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>HTTP Cookie</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="httpCookie" id="httpCookie" checked><label for="httpCookie">Use HTTP Cookie</label>
+                                                </div>
+                                                <span class="input-description">Use HTTP Cookie for file uploading to make it more secure. Default is true.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Deployment service</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="deployment" id="deployment"><label for="deployment">Enable deployment service</label>
+                                                </div>
+                                                <span class="input-description">User can deploy, test applications with the deploy agent via SSH and SFTP.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Delete related server definition</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="delSymlinkServer" id="delSymlinkServer"><label for="delSymlinkServer">Delete related server definition</label>
+                                                </div>
+                                                <span class="input-description">The related server definition will be deleted too if a symlink is deleted or expired. Default is false.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="app.id">App ID</label>
+                                                <input type="text" name="app.id" id="app.id">
+                                                <span class="input-description">UUID is recommended. Can be used for load balancing. This unique id will be automatically generated if it's not set.</span>
+                                            </div>
+                                        </div>
+                                        <div class="tab-button-content">
+                                            <div class="tab-content-input">
+                                                <label>Enable data file encryption</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="dataEncrypted" id="dataEncrypted"><label for="dataEncrypted">Enable encryption</label>
+                                                </div>
+                                                <span class="input-description">Enable encryption on data files: servers.json, users.json, symlink.json.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="user">User configuration file</label>
+                                                <input type="text" name="user" id="user">
+                                                <span class="input-description">Path of user configuration file (JSON format)</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="server">RDP hosts configuration file</label>
+                                                <input type="text" name="server" id="server">
+                                                <span class="input-description">Path of RDP hosts configuration file (JSON format)</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="html">HTML root directory</label>
+                                                <input type="text" name="html" id="html">
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="oauth2">OAuth 2.0 providers file</label>
+                                                <input type="text" name="oauth2" id="oauth2">
+                                                <span class="input-description">Path of OAuth 2.0 providers file (JSON format)</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="userGroup">User group configuration file</label>
+                                                <input type="text" name="userGroup" id="userGroup">
+                                                <span class="input-description">Path of user group configuration file (JSON format)</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="serverGroup">Server group configuration file</label>
+                                                <input type="text" name="serverGroup" id="serverGroup">
+                                                <span class="input-description">Path of server group configuration file (JSON format)</span>
+                                            </div>
+                                        </div>
+                                        <div class="tab-button-content">
+                                            <div class="tab-content-divider">
+                                                <h3>Protocols</h3>
+                                                <hr>
+                                            </div>
+
+                                            <div class="tab-content-input w100">
+                                                <label>RDP</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="RDP" id="RDP"><label for="RDP">Enable RDP</label>
+                                                </div>
+                                            </div>
+                                            <div class="tab-content-input w20">
+                                                <label>VNC</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="VNC" id="VNC"><label for="VNC">Enable VNC</label>
+                                                </div>
+                                            </div>
+                                            <div class="tab-content-input w80">
+                                                <label>Transfer VNC credentials</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="vnc.transferCredential" id="vnc.transferCredential"><label for="vnc.transferCredential">Transfer VNC credentials</label>
+                                                </div>
+                                                <span class="input-description">False by default, which disables SSO on VNC connections when SSO is enabled in users.json (<span class="inlinecode">transferCredential=true</span>).</span>
+                                            </div>
+                                            <div class="tab-content-input w20">
+                                                <label>SSH</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="SSH" id="SSH"><label for="SSH">Enable SSH</label>
+                                                </div>
+                                            </div>
+                                            <div class="tab-content-input w80">
+                                                <label>Transfer SSH credentials</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="ssh.transferCredential" id="ssh.transferCredential"><label for="ssh.transferCredential">Transfer SSH credentials</label>
+                                                </div>
+                                                <span class="input-description">False by default, which disables SSO on SSH connections when SSO is enabled in users.json (<span class="inlinecode">transferCredential=true</span>).</span>
+                                            </div>
+                                            <div class="tab-content-input w20">
+                                                <label>Telnet</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="Telnet" id="Telnet"><label for="Telnet">Enable Telnet</label>
+                                                </div>
+                                            </div>
+                                            <div class="tab-content-input w80">
+                                                <label>Transfer Telnet credentials</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="telnet.transferCredential" id="telnet.transferCredential"><label for="telnet.transferCredential">Transfer Telnet credentials</label>
+                                                </div>
+                                                <span class="input-description">False by default, which disables SSO on Telnet connections when SSO is enabled in users.json (<span class="inlinecode">transferCredential=true</span>).</span>
+                                            </div>
+
+                                            <div class="tab-content-divider">
+                                                <h3>Other</h3>
+                                                <hr>
+                                            </div>
+
+                                            <div class="tab-content-input">
+                                                <label>Keyboard-interactive method (SSH)</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="preferInteractive" id="preferInteractive" checked><label for="preferInteractive">Prefer keyboard-interactive method on SSH</label>
+                                                </div>
+                                                <span class="input-description">Prefer keyboard-interactive method on SSH. Default is true.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Remote Assistance</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="assistance" id="assistance"><label for="assistance">Enable Remote Assistance</label>
+                                                </div>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="performanceflags">Performance flags</label>
+                                                <input type="text" name="performanceflags" id="performanceflags">
+                                                <span class="input-description">You may need this if you are connecting to a Terminal Server/Remote Desktop Session Host. <a href="https://docs.sparkview.info/link/12#bkmrk-key-%C2%A0-%C2%A0-%C2%A0-%C2%A0-%C2%A0-%C2%A0-%C2%A0-%C2%A0-" target="_blank">Check our docs for more information.</a></span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="webfeed">RD Web Feed URL</label>
+                                                <input type="text" name="webfeed" id="webfeed">
+                                                <span class="input-description">RD Web Feed URL, for RD web access integration.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Webfeed cache</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="webfeedCache" id="webfeedCache" checked><label for="webfeedCache">Enable webfeed cache</label>
+                                                </div>
+                                                <span class="input-description">You'll need to restart the gateway after your webfeed content changed if it's true.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>RemoteFX</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="remotefx" id="remotefx"><label for="remotefx">Enable RemoteFX</label>
+                                                </div>
+                                                <span class="input-description">RemoteFX is LAN and 32 bit only</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="clientHost">Client user host name</label>
+                                                <input type="text" name="clientHost" id="clientHost">
+                                                <span class="input-description">Customize the host name of the client user. Default is the host name or ip address. You can use variables in the string.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="keyDelay">Key delay (milliseconds)</label>
+                                                <input type="text" name="keyDelay" id="keyDelay" value="0">
+                                                <span class="input-description">Delay between keys. Default is 0.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="credSSP">Network Level Authentication</label>
+                                                <select name="credSSP" id="credSSP">
+                                                    <option value="true">True</option>
+                                                    <option value="false" selected>False</option>
+                                                    <option value="auto">Auto</option>
+                                                </select>
+                                                <span class="input-description">"True" will slow down the connection speed a little bit . It's not necessary to use NLA if the gateway is connecting to internal RDP hosts only. It's better to enable credSSP if you are using Microsoft RD Broker for load balancing. "Auto" will connect without credSSP at the first time, reconnect with credSSP if the connection failed.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Seamless session shadowing</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="resetOnJoin" id="resetOnJoin" checked><label for="resetOnJoin">Don't use seamless session shadowing</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-button-content">
+                                            <div class="tab-content-input">
+                                                <label for="log.level">Log level</label>
+                                                <select name="log.level" id="log.level">
+                                                    <option value="SEVERE">SEVERE</option>
+                                                    <option value="WARNING">WARNING</option>
+                                                    <option value="INFO">INFO</option>
+                                                    <option value="CONFIG">CONFIG</option>
+                                                    <option value="FINE">FINE</option>
+                                                    <option value="FINER">FINER</option>
+                                                    <option value="FINEST">FINEST</option>
+                                                </select>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="logfile">Log file</label>
+                                                <input type="text" name="logfile" id="logfile">
+                                                <span class="input-description">Path of the log file</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="maxbytes">Log file max size</label>
+                                                <input type="text" name="maxbytes" id="maxbytes" value="30M">
+                                                <span class="input-description">Limit the maximum number of bytes to write to any one log file, default is 30M.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="maxfiles">Max log files</label>
+                                                <input type="text" name="maxfiles" id="maxfiles" value="99">
+                                                <span class="input-description">Log file rotation, the number of log files to use, default is 99.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Log HTTP header</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="logHttpHeader" id="logHttpHeader" checked><label for="logHttpHeader">Log HTTP header</label>
+                                                </div>
+                                                <span class="input-description">May contain sensitive information. Default is true.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Log SimpleFormatter</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="simpleFormatter" id="simpleFormatter"><label for="simpleFormatter">Use SimpleFormatter</label>
+                                                </div>
+                                                <span class="input-description">Let gateway use SimpleFormatter which is slower but allow you to configure log format.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Log session information to CSV file</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="csv.file" id="csv.file"><label for="csv.file">Log to CSV file</label>
+                                                </div>
+                                                <span class="input-description">Columns: Id, Server, Client, IP, Browser, Time, NumericId, User, Domain, Join, Protocol, Symlink, Port, Action (CONNECT/DISCONNECT/LOGIN).</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="csv.size">CSV file max size</label>
+                                                <input type="text" name="csv.size" id="csv.size" value="2G">
+                                                <span class="input-description">Limit the maximum number of bytes to write the log file, default is 2G.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Enable logging to stdout/stderr</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="stderrLog" id="stderrLog"><label for="stderrLog">Enable logging to stdout/stderr</label>
+                                                </div>
+                                                <span class="input-description">Set false to disable logging to stdout/stderr</span>
+                                            </div>
+                                        </div>
+                                        <div class="tab-button-content">
+                                            <div class="tab-content-input">
+                                                <label for="printer">Printer name</label>
+                                                <input type="text" name="printer" id="printer">
+                                                <span class="input-description">Printer name, default is "Remote Printer from Client". You can specify multiple printer names by using ";" as separator, e.g. "<span class="inlinecode">Printer1;Printer2</span>". The first one will always be the default printer.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="printerDriver">Printer driver name</label>
+                                                <input type="text" name="printerDriver" id="printerDriver">
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="maxPrintTime">Max printing time (milliseconds)</label>
+                                                <input type="text" name="maxPrintTime" id="maxPrintTime" value="1200000">
+                                                <span class="input-description">Printing conversion timeout, default is 1200000 milliseconds (20 minutes).</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Keep printing results</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="keepPrinting" id="keepPrinting"><label for="keepPrinting">Keep printing results</label>
+                                                </div>
+                                                <span class="input-description">Keep the printing results (PDF) on gateway, default is false.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>PostScript to PDF converter</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="converter" id="converter"><label for="converter">Use converter</label>
+                                                </div>
+                                                <span class="input-description">PostScript to PDF converter, used for printing. Ghostscript is recommended.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="arguments">Converter arguments</label>
+                                                <input type="text" name="arguments" id="arguments">
+                                                <span class="input-description">Arguments for converter. %1 is output PDF file name. %2 is input PS file name, they'll be replaced by program.</span>
+                                            </div>
+                                        </div>
+                                        <div class="tab-button-content">
+                                            <div class="tab-content-input">
+                                                <label for="authorization">Enable Basic Authorization</label>
+                                                <select name="authorization" id="authorization">
+                                                    <option value="none/null">none/null</option>
+                                                    <option value="Basic">Basic</option>
+                                                </select>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="trustStore">Trusted certificates</label>
+                                                <input type="text" name="trustStore" id="trustStore">
+                                                <span class="input-description">Trusted certificates for RDP or VNC server (when TLS encrypt is used and <span class="inlinecode">credSSP=true</span> in gateway.conf).</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="trustStorePassword">Truststore password</label>
+                                                <input type="text" name="trustStorePassword" id="trustStorePassword">
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="authToken.name">Auth token name</label>
+                                                <input type="text" name="authToken.name" id="authToken.name">
+                                                <span class="input-description">The parameter name in the websocket URL</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="authToken.sucessCode">Auth token success code</label>
+                                                <input type="text" name="authToken.sucessCode" id="authToken.sucessCode">
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="authToken.exec">Auth token executable</label>
+                                                <input type="text" name="authToken.exec" id="authToken.exec">
+                                                <span class="input-description">A path of executable or URL. If gateway found the Auth-Token name parameter in the websocket url, it'll execute the exe or HTTP Request. The connection can only be allowed if the exe or HTTP Request Status Code is like the Auth token success code.</span>
+                                            </div>
+
+                                            <div class="tab-content-divider">
+                                                <h3>Two-factor authentication (2FA)</h3>
+                                                <hr>
+                                            </div>
+
+                                            <div class="tab-content-input">
+                                                <label for="twoFA">Enable two-factor authentication</label>
+                                                <select name="twoFA" id="twoFA">
+                                                    <option value="0">Disable</option>
+                                                    <option value="1">Enable</option>
+                                                    <option value="2">Enforce</option>
+                                                </select>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="twoFAStore">Two-factor authentication storage path</label>
+                                                <input type="text" name="twoFAStore" id="twoFAStore">
+                                                <span class="input-description">Default is installDir\data\store.data. Make sure you back up this file. It's encrypted by default.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="organization">Connection name</label>
+                                                <input type="text" name="organization" id="organization">
+                                                <span class="input-description">Customize the connection name for the 2FA app on the mobile device.</span>
+                                            </div>
+
+                                            <div class="tab-content-divider">
+                                                <h3>Keystore</h3>
+                                                <hr>
+                                            </div>
+
+                                            <div class="tab-content-input">
+                                                <label for="keyStore">Keystore position</label>
+                                                <input type="text" name="keyStore" id="keyStore">
+                                                <span class="input-description">Set up keystore position when ssl is on/true.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="keyStorePassword">Keystore password</label>
+                                                <input type="text" name="keyStorePassword" id="keyStorePassword">
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Encrypt passwords</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="passwordEncrypted" id="passwordEncrypted"><label for="passwordEncrypted">Encrypt passwords</label>
+                                                </div>
+                                                <span class="input-description">Encrypt the keystore password and the reporting password, default is false.</span>
+                                            </div>
+
+                                            <div class="tab-content-divider">
+                                                <h3>Session shadowing</h3>
+                                                <hr>
+                                            </div>
+
+                                            <div class="tab-content-input">
+                                                <label>Shadowing</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="shadowing" id="shadowing" checked><label for="shadowing">Allow shadowing</label>
+                                                </div>
+                                                <span class="input-description">Allow shadowing/joining a session.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Native RDP shadowing</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="nativeShadowing" id="nativeShadowing"><label for="nativeShadowing">Allow native RDP shadowing</label>
+                                                </div>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Joining confirmation</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="confirmJoin" id="confirmJoin"><label for="confirmJoin">Enforce joining confirmation</label>
+                                                </div>
+                                                <span class="input-description">Confirmation needed when a user tries to join a session, default is false.</span>
+                                            </div>
+
+                                            <div class="tab-content-divider">
+                                                <h3>Session recording</h3>
+                                                <hr>
+                                            </div>
+
+                                            <div class="tab-content-input">
+                                                <label for="recording">Enable session recording</label>
+                                                <select name="recording" id="recording">
+                                                    <option value="0">Disable</option>
+                                                    <option value="1">Record graphics only</option>
+                                                    <option value="3">Record graphics and audio</option>
+                                                </select>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="recdir">Directory for session recording files</label>
+                                                <input type="text" name="recdir" id="recdir">
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Recording warning</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="recwarning" id="recwarning" checked><label for="recwarning">Warn user about recording</label>
+                                                </div>
+                                                <span class="input-description">Warn user about the recording, default is true.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Timestamp sub directory</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="rec.timestampSubDir" id="rec.timestampSubDir" checked><label for="rec.timestampSubDir">Enable timestamp sub directory</label>
+                                                </div>
+                                                <span class="input-description">Enable/disable timestamp sub directory for recdir. Default is true.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="rec.begin.exec">Executable before the session is recorded</label>
+                                                <input type="text" name="rec.begin.exec" id="rec.begin.exec">
+                                                <span class="input-description">Run an executable before the session is recorded. Arguments: <span class="inlinecode">fileName, server, user, sessionId</span>.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="rec.end.exec">Executable after the session was recorded</label>
+                                                <input type="text" name="rec.end.exec" id="rec.end.exec">
+                                                <span class="input-description">Run an executable after the session was recorded. Arguments: <span class="inlinecode">fileName, server, user, sessionId</span>.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="recFileSize">Recoding max file size (Bytes)</label>
+                                                <input type="text" name="recFileSize" id="recFileSize">
+                                                <span class="input-description">Limit the size of recording file (auto rotation)</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>Browser side session recording</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="sessionRecordParam" id="sessionRecordParam"><label for="sessionRecordParam">Enable session recording from the browser side</label>
+                                                </div>
+                                                <span class="input-description">You can enable session recording from the browser side (<span class="inlinecode">sessionRecord=on</span>) if this is true. Default value is false.</span>
+                                            </div>
+
+                                            <div class="tab-content-divider">
+                                                <h3>File/disk sharing</h3>
+                                                <hr>
+                                            </div>
+
+                                            <div class="tab-content-input">
+                                                <label for="disk">Shared disk name</label>
+                                                <input type="text" name="disk" id="disk">
+                                                <span class="input-description">The name for the shared disk, used for file uploading/downloading</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="file.post">Executable after file upload</label>
+                                                <input type="text" name="file.post" id="file.post">
+                                                <span class="input-description">Run an executable after a file was uploaded.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="fileBlockSize">File transferring block size (Bytes)</label>
+                                                <input type="text" name="fileBlockSize" id="fileBlockSize" value="524288">
+                                                <span class="input-description">Default is 524288 bytes (5M). Reducing this value can reduce the bandwidth usage but increase uploading time.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>SMB2/SFTP file service</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="fileService" id="fileService"><label for="fileService">Enable SMB2/SFTP file service</label>
+                                                </div>
+                                                <span class="input-description">Enable SMB2/SFTP file service, so user can use file.html to upload/download files to/from SMB2 share or SFTP server.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="fileUnprompted">Unprompted files</label>
+                                                <input type="text" name="fileUnprompted" id="fileUnprompted">
+                                                <span class="input-description">Files can be downloaded directly without asking user to confirm when copying a file in RDP server. For example, if the value is "<span class="inlinecode">pdf,zip</span>", when user copy a PDF file, the gateway will prepare the downloading directly without ask use to confirm. Depends on <span class="inlinecode">copyFile=true</span>.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="file.filter">File type filter</label>
+                                                <input type="text" name="file.filter" id="file.filter">
+                                                <span class="input-description">File type filter for file uploading, for example "<span class="inlinecode">exe,jar</span>"</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="file.maxSize">File max size (Bytes)</label>
+                                                <input type="text" name="file.maxSize" id="file.maxSize">
+                                                <span class="input-description">File size filter for file uploading.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>"View" button on File Manager UI</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="file.viewable" id="file.viewable"><label for="file.viewable">Enable "View" button</label>
+                                                </div>
+                                                <span class="input-description">Enable/Disable the "View" button on File Manager UI. Users can only see the "Download" button if disabled.</span>
+                                            </div>
+                                        </div>
+                                        <div class="tab-button-content">
+                                            <div class="tab-content-input">
+                                                <label for="mail.smtp.host">SMTP server/host</label>
+                                                <input type="text" name="mail.smtp.host" id="mail.smtp.host">
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="mail.smtp.port">SMTP port</label>
+                                                <input type="text" name="mail.smtp.port" id="mail.smtp.port" value="587">
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="mail.user">SMTP user name/email address</label>
+                                                <input type="text" name="mail.user" id="mail.user">
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="mail.password">SMTP password</label>
+                                                <input type="text" name="mail.password" id="mail.password">
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="mail.from">Sender name (from)</label>
+                                                <input type="text" name="mail.from" id="mail.from">
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="mail.to">Receiver mail address</label>
+                                                <input type="text" name="mail.to" id="mail.to">
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>SMTP authentication</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="mail.smtp.auth" id="mail.smtp.auth" checked><label for="mail.smtp.auth">Enable SMTP authentication</label>
+                                                </div>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label>STARTTLS</label>
+                                                <div class="checkbox-container">
+                                                    <input type="checkbox" name="mail.smtp.starttls.enable" id="mail.smtp.starttls.enable"><label for="mail.smtp.starttls.enable">Enable STARTTLS</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-button-content">
+                                            <div class="tab-content-input">
+                                                <label for="license">License file path</label>
+                                                <input type="text" name="license" id="license">
+                                                <span class="input-description">Path of the license file</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="licenseAlert">License usage alert</label>
+                                                <input type="text" name="licenseAlert" id="licenseAlert">
+                                                <span class="input-description">Float value, Email alert when license usage reached this number. If value < 1, it means percentage of your license number; If value > = 1, it means the actual concurrent license number.</span>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="license.limit">License limit</label>
+                                                <input type="text" name="license.limit" id="license.limit">
+                                                <span class="input-description">Restricts the concurrent session number for testing etc. This value must be smaller than the license number.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-content">
+                                Servers
+                            </div>
+                            <div class="tab-content">
+                                Users
+                            </div>
+                            <div class="tab-content">
+                                Symlink
+                            </div>
+                            <div class="tab-content">
+                                Session
+                            </div>
+                            <div class="tab-content">
+                                Server groups
+                            </div>
+                            <div class="tab-content">
+                                User groups
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/backend.js"></script>
+</body>
+</html>

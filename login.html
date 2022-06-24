@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SparkView</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="assets/img/favicon/safari-pinned-tab.svg" color="#0075bf">
+    <link rel="shortcut icon" href="assets/img/favicon/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="SparkView">
+    <meta name="application-name" content="SparkView">
+    <meta name="msapplication-TileColor" content="#0075bf">
+    <meta name="msapplication-TileImage" content="assets/img/favicon/mstile-144x144.png">
+    <meta name="msapplication-config" content="assets/img/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css">
+</head>
+<body>
+    <div class="full-wrap login">
+        <img src="assets/img/beyondssl.svg" alt="beyond SSL" class="login-logo">
+        <div class="login-wrap">
+            <div class="login-wrap-inner">
+                <h1>Login</h1>
+                <form action="/" class="login-form">
+                    <input type="text" name="gateway" id="login-gateway" placeholder="Gateway address" required/>
+                    <input type="text" name="user" id="login-user" placeholder="Domain\Username" required/>
+                    <input type="password" name="login-pwd" placeholder="Password" required autocomplete="off"/>
+                    <button class="button" type="submit" name="usrlogin"><i class="fa-solid fa-arrow-right-to-bracket"></i> Log in</button>
+                </form>
+            </div>
+            <div class="login-wrap-bottom">
+                <div class="login-software-version">
+                    <img src="assets/img/sparkview.svg" alt="SparkView">
+                    <span id="svversion">V<span id="svversionnr">6.1</span></span>
+                </div>
+                <div class="login-new">
+                    See <a href="/release.txt">whats new</a>.
+                </div>
+            </div>
+        </div>
+        <div class="login-copyright">
+            © Remote Spark Corp. 2011-<span id="cryear"></span>. Distributed by beyond SSL.
+        </div>
+    </div>
+
+    <script src="assets/js/backend.js"></script>
+</body>
+</html>

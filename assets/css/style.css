@@ -10,6 +10,7 @@
     --middle-grey: #eeeeee;
     --black: #000000;
     --white: #FFFFFF;
+    --black08: rgba(0,0,0,0.8);
 }
 
 
@@ -298,7 +299,8 @@ select {
     color: var(--secondary);
 }
 
-.checkbox-container {
+.checkbox-container,
+.radio-container {
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -345,9 +347,14 @@ input[type="radio"]:checked::after {
 }
 
 .checkbox-container input[type="checkbox"],
-.checkbox-container input[type="radio"] {
+.radio-container input[type="radio"] {
     flex: 1 1 44px;
     max-width: 44px;
+}
+
+label + input[type="checkbox"],
+label + input[type="radio"] {
+    margin-left: 20px;
 }
 
 label {
@@ -356,7 +363,8 @@ label {
     padding: 5px;
 }
 
-.checkbox-container label {
+.checkbox-container label,
+.radio-container label {
     font-weight: normal !important;
     padding: 0;
 }
@@ -487,6 +495,44 @@ hr + .button {
 .button.secondary:focus,
 .sidebar .button.secondary:hover,
 .sidebar .button.secondary:focus {
+    color: var(--white);
+    background: var(--primary);
+}
+
+.small-button {
+    display: inline-block;
+    background: var(--green);
+    padding: 7px 20px;
+    color: var(--white);
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 1.6rem;
+    font-weight: normal;
+    letter-spacing: 1px;
+    font-family: 'Titillium Web', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, sans-serif;
+    cursor: pointer;
+}
+
+.small-button i {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-right: 5px;
+}
+
+.small-button:hover,
+.small-button:focus {
+    color: var(--white);
+    background: var(--primary);
+}
+
+.small-button.secondary {
+    background: var(--secondary);
+}
+
+.small-button.secondary:hover,
+.small-button.secondary:focus {
     color: var(--white);
     background: var(--primary);
 }
@@ -879,4 +925,146 @@ hr + .button {
     flex: 0 1 100%;
     margin-top: 40px;
     margin-bottom: 20px;
+}
+
+.divider-with-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.divider-with-buttons h3 {
+    flex: 0 1 40%;
+}
+
+.divider-buttons {
+    flex: 0 1 60%;
+    text-align: right;
+}
+
+.divider-buttons button {
+    margin-left: 5px;
+}
+
+.divider-with-buttons hr {
+    flex: 0 1 100%;
+}
+
+.server-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: var(--light-grey);
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.server-filter::after {
+    content: '';
+    flex: 0 1 32%;
+}
+
+.server-filter .tab-content-input,
+.server-filter select {
+    margin-bottom: 0;
+}
+
+.server-list {
+    margin-top: 30px;
+}
+
+.server-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.server-list thead {
+    border-bottom: 1px solid var(--green);
+}
+
+.server-list td,
+.server-list th {
+    padding: 10px;
+}
+
+.server-list tbody tr:nth-child(even) {
+    background: var(--light-grey);
+}
+
+td span[name="view"] {
+    margin-right: 10px;
+    cursor: pointer;
+    color: var(--primary);
+}
+
+td span[name="remove"] {
+    cursor: pointer;
+    color: red;
+}
+
+.server-modal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: var(--black08);
+    cursor: zoom-out;
+    display: none;
+}
+
+.server-modal-inner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--white);
+    border-radius: 20px;
+    padding: 30px;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0px 0px 25px 0px rgb(0 0 0 / 20%);
+    -moz-box-shadow: 0px 0px 25px 0px rgba(0,0,0,.2);
+    box-shadow: 0px 0px 25px 0px rgb(0 0 0 / 20%);
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    max-height: 80vh;
+    overflow: scroll;
+    cursor: default;
+}
+
+.server-modal-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.server-modal-info::after {
+    content: '';
+    flex: 0 1 49%;
+}
+
+.server-modal-config-inner {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 1.6rem;   
+}
+
+.server-modal-config-inner.active {
+    display: flex;
+}
+
+.server-modal-config-inner::after {
+    content: '';
+    flex: 0 1 49%;
+}
+
+.server-modal-config-inner .tab-content-input,
+.server-modal-info .tab-content-input {
+    flex: 0 1 49%;
 }

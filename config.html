@@ -821,7 +821,539 @@
                                 <button class="button" type="submit" name="saveGateway" onclick="sparkConfig.saveGateway();"><i class="fa-solid fa-floppy-disk"></i> Save configuration</button>
                             </div>
                             <div class="tab-content">
-                                Servers
+                                <div class="tab-content-divider divider-with-buttons">
+                                    <h3>Server configuration</h3>
+                                    <div class="divider-buttons">
+                                        <button class="small-button" name="addServerWizard" onclick="addServerWizard();"><i class="fa-solid fa-wand-magic-sparkles"></i> Add server (wizard)</button>
+                                        <button class="small-button" name="addServer" onclick="sparkConfig.editServer();"><i class="fa-solid fa-plus"></i> Add server (manual)</button>
+                                        <button class="small-button secondary" name="refresh" onclick="sparkConfig.refreshServers();"><i class="fa-solid fa-arrow-rotate-right"></i> Refresh</button>
+                                    </div>
+                                    <hr>
+                                </div>
+
+                                <div class="server-filter">
+                                    <div class="tab-content-input">
+                                        <label for="servers.type">Type</label>
+                                        <select name="type" id="servers.type">
+                                            <option value="NORMALLIST">Normal list</option>
+                                            <option value="WHITELIST">White list</option>
+                                            <option value="BLACKLIST">Black list</option>
+                                        </select>
+                                    </div>
+                                    <div class="tab-content-input">
+                                        <label>Visibility</label>
+                                        <div class="checkbox-container">
+                                            <input type="checkbox" name="servers.display" id="servers.display"><label for="servers.display">Visible</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="server-list">
+                                    <table id="server.rows">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Display name</th>
+                                                <th scope="col">Server</th>
+                                                <th scope="col">RemoteApp</th>
+                                                <th scope="col">Start program on connection</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>rdp1</td>
+                                                <td>RDP-Server Office</td>
+                                                <td>192.168.0.50</td>
+                                                <td>startApp.exe</td>
+                                                <td>C:\startup\timelog.exe</td>
+                                                <td><span name="view"><i class="fa-solid fa-pen-to-square"></i></span><span name="remove"><i class="fa-solid fa-xmark"></i></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>rdp2</td>
+                                                <td>RDP-Server Home</td>
+                                                <td>192.168.0.51</td>
+                                                <td>startApp.exe</td>
+                                                <td>C:\startup\timelogHome.exe</td>
+                                                <td><span name="view"><i class="fa-solid fa-pen-to-square"></i></span><span name="remove"><i class="fa-solid fa-xmark"></i></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>appPriv</td>
+                                                <td>Private Applikation</td>
+                                                <td>192.168.0.139</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><span name="view"><i class="fa-solid fa-pen-to-square"></i></span><span name="remove"><i class="fa-solid fa-xmark"></i></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>random</td>
+                                                <td>Some random server</td>
+                                                <td>192.168.0.9</td>
+                                                <td></td>
+                                                <td>C:\startup\timelog.exe</td>
+                                                <td><span name="view"><i class="fa-solid fa-pen-to-square"></i></span><span name="remove"><i class="fa-solid fa-xmark"></i></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="server-modal">
+                                    <div class="server-modal-inner">
+                                        <h3>Add/edit server</h3>
+                                        <hr>
+                                        <div class="server-modal-info">
+                                            <div class="tab-content-input">
+                                                <label for="server.id">Server ID</label>
+                                                <input type="text" name="server.id" id="server.id" required>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="displayName">Display name</label>
+                                                <input type="text" name="displayName" id="displayName" required>
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="server">Server address</label>
+                                                <input type="text" name="server" id="server">
+                                            </div>
+                                            <div class="tab-content-input">
+                                                <label for="icon">Icon</label>
+                                                <input type="text" name="icon" id="icon">
+                                            </div>
+                                            <div class="tab-content-input w100">
+                                                <label>Protocol</label>
+                                                <div class="radio-container">
+                                                    <input type="radio" id="isRDP" name="protocolVal" value="RDP" checked><label for="isRDP">RDP</label>
+                                                    <input type="radio" id="isVNC" name="protocolVal" value="VNC"><label for="isVNC">VNC</label>
+                                                    <input type="radio" id="isSSH" name="protocolVal" value="SSH"><label for="isSSH">SSH</label>
+                                                    <input type="radio" id="isTelnet" name="protocolVal" value="Telnet"><label for="isTelnet">Telnet</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="server-modal-config">
+                                            <div class="server-modal-config-inner active" id="config-rdp">
+                                                <div class="tab-content-input">
+                                                    <label for="server.port">Port</label>
+                                                    <input type="number" name="server.port" id="server.port" value="3389">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="username">Username</label>
+                                                    <input type="text" name="username" id="username">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="password">Password</label>
+                                                    <input type="password" name="password" id="password" autocomplete="off">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="domain">Domain</label>
+                                                    <input type="text" name="domain" id="domain">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Console session</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="console" id="console"><label for="console">Console session</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Legacy mode</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="legacyMode" id="legacyMode"><label for="legacyMode">Is VirtualBox RDP or Xrdp</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="server.keyboard">Keyboard layout</label>
+                                                    <input type="text" name="server.keyboard" id="server.keyboard">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="colorOpt">Color depth</label>
+                                                    <select name="colorOpt" id="colorOpt">
+                                                        <option value="8">256</option>
+                                                        <option value="16" selected>High color (16 bit)</option>
+                                                        <option value="24">True color (24 bit)</option>
+                                                        <option value="32">Highest quality (32 bit)</option>
+                                                    </select>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="width">Width</label>
+                                                    <input type="number" name="width" id="width">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="height">Height</label>
+                                                    <input type="number" name="height" id="height">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Network Level Authentication</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="credSSP" id="credSSP"><label for="credSSP">Use NLA</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-content-divider">
+                                                    <h3>Application stream</h3>
+                                                    <hr>
+                                                </div>
+
+                                                <div class="tab-content-input">
+                                                    <label for="command">Execute command/program on connection</label>
+                                                    <input type="text" name="command" id="command">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="directory">Source directory for command/program execution</label>
+                                                    <input type="text" name="directory" id="directory">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="remoteProgram">Connect to a RemoteApp</label>
+                                                    <input type="text" name="remoteProgram" id="remoteProgram">
+                                                    <span class="input-description">Always use alias name instead of program path, example: <span class="inlinecode">||WINWORD</span>, <span class="inlinecode">||wordpad</span> or <span class="inlinecode">||EXCEL</span></span>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="remoteWorkDir">RemoteApp directory</label>
+                                                    <input type="text" name="remoteWorkDir" id="remoteWorkDir">
+                                                    <span class="input-description">Directory for running RemoteApp</span>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="remoteArgs">RemoteApp arguments</label>
+                                                    <input type="text" name="remoteArgs" id="remoteArgs">
+                                                    <span class="input-description">Arguments for running RemoteApp</span>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="minWidth">RemoteApp minimum width (pixels)</label>
+                                                    <input type="number" name="minWidth" id="minWidth">
+                                                    <span class="input-description">Some applications need a minimum resolution to work</span>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="minHeight">RemoteApp minimum height (pixels)</label>
+                                                    <input type="number" name="minHeight" id="minHeight">
+                                                    <span class="input-description">Some applications need a minimum resolution to work</span>
+                                                </div>
+
+                                                <div class="tab-content-divider">
+                                                    <h3>Redirections</h3>
+                                                    <hr>
+                                                </div>
+
+                                                <div class="tab-content-input">
+                                                    <label>Clipboard redirection</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="mapClipboard" id="mapClipboard"><label for="mapClipboard">Use clipboard redirection</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="playSound">Sound options</label>
+                                                    <select name="playSound" id="playSound">
+                                                        <option value="0">Bring sound to local</option>
+                                                        <option value="1">No sound</option>
+                                                        <option value="2">Leave sound on remote computer</option>
+                                                    </select>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="soundPref">Sound quality</label>
+                                                    <select name="soundPref" id="soundPref">
+                                                        <option value="0">Low quality sound</option>
+                                                        <option value="1">High quality sound</option>
+                                                    </select>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Audio recording</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="audioRecord" id="audioRecord"><label for="audioRecord">Enable audio recording</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Printing</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="mapPrinter" id="mapPrinter"><label for="mapPrinter">Enable printing</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="sessionRecord">Session recording</label>
+                                                    <select name="sessionRecord" id="sessionRecord">
+                                                        <option value="0">No session recording</option>
+                                                        <option value="1">Record graphic only</option>
+                                                        <option value="3">Record graphic and sound</option>
+                                                    </select>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Smart card</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="smartCard" id="smartCard"><label for="smartCard">Enable smart card redirection</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Camera</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="mapCamera" id="mapCamera"><label for="mapCamera">Enable camera redirection</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-content-divider">
+                                                    <h3>Disk mapping</h3>
+                                                    <hr>
+                                                </div>
+
+                                                <div class="tab-content-input">
+                                                    <label>Disk redirection</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="server.mapDisk" id="server.mapDisk"><label for="server.mapDisk">Enable disk redirection</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-content-divider">
+                                                    <h5>Disk 0</h5>
+                                                    <hr>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="dosName0">Name</label>
+                                                    <input type="text" name="dosName0" id="dosName0" onchange="document.getElementById('server.mapDisk').checked=true;">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="devicePath0">Path</label>
+                                                    <input type="text" name="devicePath0" id="devicePath0">
+                                                </div>
+                                                <div class="tab-content-input w100">
+                                                    <label>Actions</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="actUpload0" name="actUpload0" value="actUpload0" checked><label for="actUpload0">Upload</label>
+                                                        <input type="checkbox" id="actDownload0" name="actDownload0" value="actDownload0" checked><label for="actDownload0">Download</label>
+                                                        <input type="checkbox" id="actRedirect0" name="actRedirect0" value="actRedirect0" checked><label for="actRedirect0">Redirect</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-content-divider">
+                                                    <h5>Disk 1</h5>
+                                                    <hr>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="dosName1">Name</label>
+                                                    <input type="text" name="dosName1" id="dosName1" onchange="document.getElementById('server.mapDisk').checked=true;">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="devicePath1">Path</label>
+                                                    <input type="text" name="devicePath1" id="devicePath1">
+                                                </div>
+                                                <div class="tab-content-input w100">
+                                                    <label>Actions</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="actRedirect1" name="actRedirect1" value="actRedirect1" checked><label for="actRedirect1">Redirect</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-content-divider">
+                                                    <h5>Disk 2</h5>
+                                                    <hr>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="dosName2">Name</label>
+                                                    <input type="text" name="dosName2" id="dosName2" onchange="document.getElementById('server.mapDisk').checked=true;">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="devicePath2">Path</label>
+                                                    <input type="text" name="devicePath2" id="devicePath2">
+                                                </div>
+                                                <div class="tab-content-input w100">
+                                                    <label>Actions</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="actRedirect2" name="actRedirect2" value="actRedirect2" checked><label for="actRedirect2">Redirect</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-content-divider">
+                                                    <h3>Wake on LAN</h3>
+                                                    <hr>
+                                                </div>
+
+                                                <div class="tab-content-input">
+                                                    <label for="mac">MAC address</label>
+                                                    <input type="text" name="mac" id="mac">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="macIP">Broadcast IP</label>
+                                                    <input type="text" name="macIP" id="macIP">
+                                                    <span class="input-description">192.168.0.255, 255.255.255.255</span>
+                                                </div>
+
+                                                <div class="tab-content-divider">
+                                                    <h3>Miscellaneous</h3>
+                                                    <hr>
+                                                </div>
+
+                                                <div class="tab-content-input">
+                                                    <label for="performanceflags">Performance flags</label>
+                                                    <input type="text" name="performanceflags" id="performanceflags" value="111">
+                                                    <span class="input-description">Default value is 111 (111 = PERF_DISABLE_CURSOR_SHADOW | PERF_DISABLE_CURSORSETTINGS | PERF_DISABLE_FULLWINDOWDRAG | PERF_DISABLE_MENUANIMATIONS | PERF_DISABLE_THEMING | PERF_DISABLE_WALLPAPER)</span>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="loadBalanceInfo">Load balancing</label>
+                                                    <input type="text" name="loadBalanceInfo" id="loadBalanceInfo">
+                                                    <span class="input-description">Load balancing information</span>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Session shadowing</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="shadowing" name="shadowing"><label for="shadowing">Enable session shadowing</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="vmid">Hyper-V VM GUID</label>
+                                                    <input type="text" name="vmid" id="vmid">
+                                                    <span class="input-description">For example: <span class="inlinecode">B3D5444C-2611-405A-9CA0-7AA8DA94DF0B</span>. Used for Hyper-V console connection.</span>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>RemoteFX</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="remotefx" name="remotefx"><label for="remotefx">Use RemoteFX</label>
+                                                    </div>
+                                                    <span class="input-description">RemoteFX is LAN and 32 bit only</span>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>RDP 6.1 decompression</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="decompressingRDP61" name="decompressingRDP61"><label for="decompressingRDP61">Use RDP 6.1 decompression</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="server-modal-config-inner" id="config-vnc">
+                                                <div class="tab-content-input">
+                                                    <label for="server.vnc.port">Port</label>
+                                                    <input type="number" name="server.vnc.port" id="server.vnc.port" value="5900">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="vnc.password">Password</label>
+                                                    <input type="password" name="vnc.password" id="vnc.password" autocomplete="off">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="encoding">Encoding</label>
+                                                    <select name="encoding" id="encoding">
+                                                        <option value="16">ZRLE</option>
+                                                        <option value="7">Raw</option>
+                                                        <option value="0">Tight</option>
+                                                    </select>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="quality">JPEG quality</label>
+                                                    <select name="quality" id="quality">
+                                                        <option value="1">1 (lowest quality)</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5" selected>5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9 (best quality)</option>
+                                                    </select>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="compression">ZIP/tight compression</label>
+                                                    <select name="compression" id="compression">
+                                                        <option value="1">1 (little compression)</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6" selected>6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                    </select>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>CopyRect encoding</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="UseCopyRect" name="UseCopyRect"><label for="UseCopyRect">Use CopyRect encoding</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="vnc.color">Colors</label>
+                                                    <select name="vnc.color" id="vnc.color">
+                                                        <option value="32">Full color</option>
+                                                        <option value="8">256 colors</option>
+                                                    </select>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Server sharing</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="share" name="share" checked><label for="share">Share this server</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Clipboard redirection</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="vnc.mapClipboard" name="vnc.mapClipboard" checked><label for="vnc.mapClipboard">Use clipboard redirection</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Session recording</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="vnc.sessionRecord" name="vnc.sessionRecord" checked><label for="vnc.sessionRecord">Use session recording (graphic only)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="server-modal-config-inner" id="config-ssh">
+                                                <div class="tab-content-input">
+                                                    <label for="server.ssh.port">Port</label>
+                                                    <input type="number" name="server.ssh.port" id="server.ssh.port" value="22">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="ssh.username">Username</label>
+                                                    <input type="text" name="ssh.username" id="ssh.username">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="ssh.password">Password</label>
+                                                    <input type="password" name="ssh.password" id="ssh.password" autocomplete="off">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="ssh.fontSize">Font size (pixels)</label>
+                                                    <input type="number" name="ssh.fontSize" id="ssh.fontSize" value="13">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Clipboard redirection</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="ssh.mapClipboard" name="ssh.mapClipboard" checked><label for="ssh.mapClipboard">Use clipboard redirection</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Session recording</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="ssh.sessionRecord" name="ssh.sessionRecord" checked><label for="ssh.sessionRecord">Use session recording (graphic only)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="ssh.keyfile">Key file</label>
+                                                    <input type="text" name="ssh.keyfile" id="ssh.keyfile">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="ssh.keyfilePwd">Password of key file</label>
+                                                    <input type="password" name="ssh.keyfilePwd" id="ssh.keyfilePwd" autocomplete="off">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="ssh.terminalType">Terminal type</label>
+                                                    <input type="text" name="ssh.terminalType" id="ssh.terminalType" value="xterm">
+                                                </div>
+                                            </div>
+                                            <div class="server-modal-config-inner" id="config-telnet">
+                                                <div class="tab-content-input">
+                                                    <label for="server.telnet.port">Port</label>
+                                                    <input type="number" name="server.telnet.port" id="server.telnet.port" value="23">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label for="telnet.fontSize">Font size (pixels)</label>
+                                                    <input type="number" name="telnet.fontSize" id="telnet.fontSize" value="13">
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Clipboard redirection</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="telnet.mapClipboard" name="telnet.mapClipboard" checked><label for="telnet.mapClipboard">Use clipboard redirection</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-content-input">
+                                                    <label>Session recording</label>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" id="telnet.sessionRecord" name="telnet.sessionRecord" checked><label for="telnet.sessionRecord">Use session recording (graphic only)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-content">
                                 Users

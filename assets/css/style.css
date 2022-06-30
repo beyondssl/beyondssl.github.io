@@ -886,22 +886,6 @@ hr + .button {
     margin-bottom: 20px;
 }
 
-.tab-content-input.w20 {
-    flex: 0 1 20%;
-}
-
-.tab-content-input.w50 {
-    flex: 0 1 48%;
-}
-
-.tab-content-input.w80 {
-    flex: 0 1 78%;
-}
-
-.tab-content-input.w100 {
-    flex: 0 1 100%;
-}
-
 .tab-content-input label {
     font-weight: bold;
 }
@@ -1067,4 +1051,20 @@ td span[name="remove"] {
 .server-modal-config-inner .tab-content-input,
 .server-modal-info .tab-content-input {
     flex: 0 1 49%;
+}
+
+.tab-content-input.w20 {
+    flex: 0 1 20%;
+}
+
+.tab-content-input.w50 {
+    flex: 0 1 48%;
+}
+
+.tab-content-input.w80 {
+    flex: 0 1 78%;
+}
+
+.tab-content-input.w100 {
+    flex: 0 1 100%;
 }

@@ -1201,12 +1201,24 @@
                                                         <span class="input-description">Turning this feature off, will not display the cursor to improve the performance</span>
                                                     </div>
                                                     <div class="tab-content-input">
+                                                        <label>Ignore local cursor</label>
+                                                        <div class="checkbox-container">
+                                                            <input type="checkbox" id="ignoreCursor" name="ignoreCursor" checked><label for="ignoreCursor">Ignore local cursor</label>
+                                                        </div>
+                                                        <span class="input-description">Turning this feature on means the client will draw the cursor received</span>
+                                                    </div>
+                                                    <div class="tab-content-input">
                                                         <label for="repeaterHost">Repeater address</label>
                                                         <input type="text" name="repeaterHost" id="repeaterHost">
                                                     </div>
                                                     <div class="tab-content-input">
                                                         <label for="repeaterPort">Repeater port</label>
                                                         <input type="text" name="repeaterPort" id="repeaterPort">
+                                                    </div>
+                                                    <div class="tab-content-input">
+                                                        <label for="repeaterMagic">Repeater magic string</label>
+                                                        <input type="text" name="repeaterMagic" id="repeaterMagic">
+                                                        <span class="input-description">Magic string which is sent to the proxy, e.g. <span class="inlinecode">ID:3333</span></span>
                                                     </div>
                                                     
                                                     <div class="tab-content-input">

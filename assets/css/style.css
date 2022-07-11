@@ -1352,4 +1352,33 @@ td span[name="remove"] {
         margin-left: 0;
         margin-bottom: 10px;
     }
+
+    .login-wrap {
+        padding-left: 20px;
+        padding-right: 20px;
+        box-sizing: border-box;
+    }
+
+    .login-wrap-inner {
+        padding: 20px;
+    }
+
+    .login-copyright {
+        width: 100%;
+        padding: 0 40px;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .login-new {
+        display: none;
+    }
+
+    .login-software-version img {
+        width: 120px;
+    }
+
+    .login-wrap-bottom {
+        padding: 0 30px;
+    }
 }
